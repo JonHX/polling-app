@@ -1,53 +1,29 @@
-/**
- * Layout component that queries for data
- * with Gatsby's StaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/static-query/
- */
+// ./src/layouts/index.js
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
-import React from "react"
-import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
+import Header from '../components/Header';
+import { Container } from '../styledComponents/layout';
 
-import Header from "./header"
-import "./layout.css"
+import '../css/main.css';
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-    render={data => (
-      <>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <div
-          style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0px 1.0875rem 1.45rem`,
-            paddingTop: 0,
-          }}
-        >
-          <main>{children}</main>
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
-        </div>
-      </>
-    )}
-  />
-)
+const TemplateWrapper = ({ children }) => (
+  <div>
+    <Helmet
+      title="Polling App"
+      meta={[
+        { name: 'description', content: 'Sample' },
+        { name: 'keywords', content: 'sample, something' },
+      ]}
+    />
+    <Header background="background-image: linear-gradient(116deg, #08AEEA 0%, #2AF598 100%)" />
+    <Container>{children()}</Container>
+  </div>
+);
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+TemplateWrapper.propTypes = {
+  children: PropTypes.func,
+};
 
-export default Layout
+export default TemplateWrapper;
